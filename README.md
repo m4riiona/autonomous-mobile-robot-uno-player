@@ -18,11 +18,30 @@ The system integrates reactive wall-following navigation, map-based waypoint nav
 
 ## System Architecture
 
-[LiDAR /scan] ───────────────► wall_follower_node ──► /cmd_vel
-│
-[map_server] ──► AMCL ──► move_base ◄── mission_controller
-▲
-[Camera] ──► YOLOv11 detector ──► JSON ─────► uno_orchestrator (FSM)
+```mermaid
+graph TD
+    LiDAR[\LiDAR /scan/] style LiDAR fill:#f5b041,stroke:#333,stroke-width:2px
+    Camera[\Camera/] style Camera fill:#f5b041,stroke:#333,stroke-width:2px
+    Robot[TurtleBot3 Robot] style Robot fill:#3498db,stroke:#333,stroke-width:2px
+
+    WF[wall_follower_node]
+    MS[map_server]
+    AMCL[AMCL]
+    MB[move_base]
+    MC[mission_controller]
+    DET[uno_detector_node]
+    ORCH[uno_orchestrator_node]
+
+    LiDAR -->|/scan| WF
+    WF -->|/cmd_vel| Robot
+    MS -->|/map| AMCL
+    MS -->|/map| MB
+    AMCL -->|/amcl_pose| MB
+    DET -->|/uno_detector/detections JSON| ORCH
+    ORCH -->|MoveBaseAction Goals| MB
+    ORCH -->|/cmd_vel adjustments| Robot
+    ORCH -->|/sound| Robot
+    MC -.->|Services| ORCH
 
 ## 👥 Authors
 * Sam Brumwell
