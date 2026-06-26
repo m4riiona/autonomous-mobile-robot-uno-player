@@ -1,0 +1,11 @@
+<launch>
+  <node
+    pkg="uno_wall_navigation"
+    type="wall_follower_node.py"
+    name="uno_wall_follower"
+    output="screen">
+    <param name="enabled" value="true" />
+    <remap from="enable" to="/uno_wall_follower/enable" />
+  </node>
+</launch>
+

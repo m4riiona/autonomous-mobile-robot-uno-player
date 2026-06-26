@@ -1,0 +1,7 @@
+<launch>
+  <node
+    pkg="uno_wall_navigation"
+    type="waypoint_setup_helper.py"
+    name="waypoint_setup_helper"
+    output="screen" />
+</launch>

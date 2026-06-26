@@ -1,0 +1,30 @@
+<launch>
+  <arg name="weights" default="best_20260517_135309.pt" />
+  <arg name="image_topic" default="/camera/image_raw/compressed" />
+  <arg name="image_transport" default="compressed" />
+  <arg name="repub_topic" default="/uno_detector/image" />
+  <arg name="conf" default="0.25" />
+  <arg name="imgsz" default="640" />
+  <arg name="display" default="false" />
+  <arg name="print_to_terminal" default="true" />
+  <arg name="publish_annotated" default="true" />
+  <arg name="publish_detections" default="true" />
+
+  <node pkg="uno_detector_ros" type="image_republisher.py" name="image_republisher" output="screen">
+    <param name="image_topic" value="$(arg image_topic)" />
+    <param name="output_topic" value="$(arg repub_topic)" />
+  </node>
+
+  <node pkg="uno_detector_ros" type="uno_detector_node.py" name="uno_detector" output="screen">
+    <param name="weights" value="$(arg weights)" />
+    <!-- detector subscribes to the republished, standardized topic -->
+    <param name="image_topic" value="$(arg repub_topic)" />
+    <param name="image_transport" value="$(arg image_transport)" />
+    <param name="conf" value="$(arg conf)" />
+    <param name="imgsz" value="$(arg imgsz)" />
+    <param name="display" value="$(arg display)" />
+    <param name="print_to_terminal" value="$(arg print_to_terminal)" />
+    <param name="publish_annotated" value="$(arg publish_annotated)" />
+    <param name="publish_detections" value="$(arg publish_detections)" />
+  </node>
+</launch>

@@ -1,0 +1,23 @@
+<launch>
+  <arg name="waypoints_file" default="$(find uno_wall_navigation)/config/card_waypoints.yaml" />
+  <arg name="detections_topic" default="/uno_detector/detections" />
+  <arg name="min_confidence" default="0.70" />
+  <arg name="move_base_timeout" default="90.0" />
+  <arg name="sound_enabled" default="true" />
+  <arg name="scan_each_card_timeout" default="5.0" />
+  <arg name="debug" default="true" />
+
+  <node
+    pkg="uno_orchestrator_ros"
+    type="uno_orchestrator_node.py"
+    name="uno_orchestrator"
+    output="screen">
+    <param name="waypoints_file" value="$(arg waypoints_file)" />
+    <param name="detections_topic" value="$(arg detections_topic)" />
+    <param name="min_confidence" value="$(arg min_confidence)" />
+    <param name="move_base_timeout" value="$(arg move_base_timeout)" />
+    <param name="sound_enabled" value="$(arg sound_enabled)" />
+    <param name="scan_each_card_timeout" value="$(arg scan_each_card_timeout)" />
+    <param name="debug" value="$(arg debug)" />
+  </node>
+</launch>

@@ -1,0 +1,24 @@
+# Posiciones de las cartas en el mapa (frame: map).
+# Edita x, y, yaw segun tu mi_mapa_uno.
+# yaw en radianes: 0=mira al +X, 1.57=mira al +Y, 3.14=mira al -X, -1.57=mira al -Y
+waypoints:
+  - name: carta_1
+    x: 0.852
+    y: -1.486
+    yaw: 1.587
+  - name: carta_2
+    x: 1.136
+    y: -3.670
+    yaw: 0.054
+  - name: carta_3
+    x: 0.667
+    y: -5.326
+    yaw: 0.085
+  - name: carta_4
+    x: -1.429
+    y: -4.570
+    yaw: -3.009
+  - name: carta_5
+    x: -1.744
+    y: -1.691
+    yaw: -3.077

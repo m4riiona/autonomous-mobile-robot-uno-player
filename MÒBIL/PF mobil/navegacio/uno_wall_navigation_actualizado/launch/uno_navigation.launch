@@ -1,0 +1,55 @@
+<launch>
+  <!--
+    Navegacion para el TurtleBot3 real en el proyecto UNO.
+
+    Este launch evita incluir directamente turtlebot3_navigation.launch porque ese
+    launch puede arrancar turtlebot3_remote.launch y crear un segundo
+    /robot_state_publisher. En robot real normalmente ya existe odom -> base_footprint
+    desde turtlebot3_bringup; aqui arrancamos solo map_server, AMCL y move_base.
+  -->
+
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" />
+  <arg name="map_file" default="$(find uno_wall_navigation)/maps/mi_mapa_uno.yaml" />
+  <arg name="open_rviz" default="true" />
+
+  <!--
+    Dejar en false si turtlebot3_bringup ya esta publicando robot_state_publisher.
+    Poner en true solo si no aparece RobotModel/robot_description en RViz y no hay
+    ningun /robot_state_publisher ya activo.
+  -->
+  <arg name="include_turtlebot3_remote" default="false" />
+
+  <!--
+    Fix minimo para el problema real detectado: /scan llega con frame_id=base_scan,
+    pero no existe una TF util desde la base del robot hasta el laser.
+  -->
+  <arg name="publish_static_laser_tf" default="true" />
+
+  <include if="$(arg include_turtlebot3_remote)" file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)" output="screen" />
+
+  <node
+    if="$(arg publish_static_laser_tf)"
+    pkg="tf"
+    type="static_transform_publisher"
+    name="uno_base_scan_static_tf"
+    args="0 0 0.15 0 0 0 base_footprint base_scan 50" />
+
+  <include file="$(find turtlebot3_navigation)/launch/amcl.launch" />
+
+  <include file="$(find turtlebot3_navigation)/launch/move_base.launch">
+    <arg name="model" value="$(arg model)" />
+  </include>
+
+  <group if="$(arg open_rviz)">
+    <node
+      pkg="rviz"
+      type="rviz"
+      name="rviz"
+      required="true"
+      args="-d $(find turtlebot3_navigation)/rviz/turtlebot3_navigation.rviz" />
+  </group>
+</launch>
