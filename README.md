@@ -52,7 +52,7 @@ graph TD
 
 ```
 
-## 👥 Authors
+## Authors
 * Sam Brumwell
 * Mariona Casasnovas Simon
 * Martina Hernández
