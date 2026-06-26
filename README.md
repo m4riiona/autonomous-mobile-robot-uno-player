@@ -57,7 +57,7 @@ graph TD
 * Mariona Casasnovas Simon
 * Martina Hernández
 * Núria López Encinas
-* Veronica Oñate
+* Verónica Oñate
 
 *Facultat d'Informàtica de Barcelona (FIB) - Universitat Politècnica de Catalunya (UPC)*
 
