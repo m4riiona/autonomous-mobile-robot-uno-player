@@ -20,10 +20,10 @@ The system integrates reactive wall-following navigation, map-based waypoint nav
 
 ```mermaid
 graph TD
-    LiDAR[\LiDAR /scan/] style LiDAR fill:#f5b041,stroke:#333,stroke-width:2px
-    Camera[\Camera/] style Camera fill:#f5b041,stroke:#333,stroke-width:2px
-    Robot[TurtleBot3 Robot] style Robot fill:#3498db,stroke:#333,stroke-width:2px
-
+    %% Definició de Nodes
+    LiDAR[\LiDAR /scan/]
+    Camera[\Camera/]
+    Robot[TurtleBot3 Robot]
     WF[wall_follower_node]
     MS[map_server]
     AMCL[AMCL]
@@ -32,6 +32,7 @@ graph TD
     DET[uno_detector_node]
     ORCH[uno_orchestrator_node]
 
+    %% Flux de Dades i Tòpics
     LiDAR -->|/scan| WF
     WF -->|/cmd_vel| Robot
     MS -->|/map| AMCL
@@ -42,6 +43,12 @@ graph TD
     ORCH -->|/cmd_vel adjustments| Robot
     ORCH -->|/sound| Robot
     MC -.->|Services| ORCH
+
+    %% Assignació d'Estils (Corregit per a GitHub)
+    style LiDAR fill:#f5b041,stroke:#333,stroke-width:2px
+    style Camera fill:#f5b041,stroke:#333,stroke-width:2px
+    style Robot fill:#3498db,stroke:#333,stroke-width:2px
+    style ORCH fill:#2ecc71,stroke:#333,stroke-width:2px
 
 ## 👥 Authors
 * Sam Brumwell
